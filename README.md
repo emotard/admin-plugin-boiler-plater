@@ -18,8 +18,15 @@ Step 5 - Once you have added a route you then need to create a view file and nam
 Step 6 - Once you have create a new route and file you are free to create any design you wont please take note of some helper functions in
 the general-settings.php view. 
 
-$input->make_input_text -- Creates a simple text input, Params; 
+$input->make_input_text('name') -- Creates a simple text input, Params -- name of input field; 
 
-$input->make_input_textarea -- Creates simple text area 
+$input->make_input_textarea('name') -- Creates simple text area, Params -- name of text field 
 
-To be continued...
+$input->make_input_select('name'', array(''), Create dropdown select, Params -- name of select and then array of options. 
+
+$input->make_input_colour_picker('name'),  Create colour picker, Params -- name of input
+
+$input->make_input_tinymce('name'), Create textarea with tinymce, Params -- name of textarea
+
+
+To be continued.......
