@@ -76,7 +76,7 @@ function process_boiler_plate_page_fields() {
 
     }
     
-    var_dump($save);
+  //var_dump($save);
 
 	update_option( PLUGIN_SLUG . '-' . $current_tab, $save );
 
