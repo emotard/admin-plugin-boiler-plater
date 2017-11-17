@@ -17,7 +17,7 @@ Class Route {
 			$this->current_tab = 'general-settings';
 		}
 
-        $slug = plugin_create_slug( $route_name );
+        	$slug = plugin_create_slug( $route_name );
         
 		$class = ( $this->current_tab == $slug ) ? ' is-active' : '';
 
