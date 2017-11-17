@@ -32,7 +32,7 @@ class Input {
 	 */
 	public function make_input_text( $name ) {
 
-		$name = strtolower(strtolower($this->remove_spaces( $name )));
+		$name = strtolower($this->remove_spaces( $name ));
 
 		echo '<div class="control"><input class="input" type="text" name="' . $name . '" value="' . $this->page_options[ $name ] . '"></input></div>';
 
@@ -45,7 +45,7 @@ class Input {
 	 */
 	public function make_input_textarea( $name ) {
 
-		$name = strtolower(strtolower($this->remove_spaces( $name )));
+		$name = strtolower($this->remove_spaces( $name ));
 
 		echo '<textarea class="textarea" name="' . $name . '" form="' . $this->current_tab . '">' . $this->page_options[ $name ] . '</textarea>';
 	}
