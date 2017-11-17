@@ -1,0 +1,21 @@
+
+section#main-content {
+    padding-top: 20px;
+    padding-bottom: 30px;
+}
+
+#saving_settings{
+    display: none;
+}
+
+.section {
+    padding: 1.5rem 0rem;
+}
+
+input#rl-color-picker {
+    width: 85px;
+    color: white;
+    /* height: 36px; */
+}
+
+.hidden{display:none;}
