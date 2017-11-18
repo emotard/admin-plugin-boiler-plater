@@ -13,26 +13,44 @@ if ( $current_tab && $current_tab != 'general-settings' ) {
 
 $page_options = get_option( PLUGIN_SLUG . '-' . $current_tab );
 
-require_once RL_PLUGIN_PATH . 'views/template-parts/header.php';
 
 ?>
 
-<section id="main-content">
-    <form id="<?php echo( $current_tab ? $current_tab : 'general-settings' ); ?>" action=" ">
-		<?php
-		if ( $current_tab ) {
-			require_once RL_PLUGIN_PATH . 'views/' . $current_tab . '.php';
-		} else {
-			require_once RL_PLUGIN_PATH . 'views/general-settings.php';
-		}
-		?>
 
-    </form>
+<div class="bd-klmn-gaps"></div>
+<div id="plugin-wrapper" class="container">
 
-</section> <!-- end main content section -->
+	<div class="columns is-variable bd-klmn-columns is-3">
+		<div id="plugin-nav" class="column is-3">
+			<div class="plugin-nav-header">
+				<span class="dashicons dashicons-dashboard"></span>
+				<div class="subtitle">Navigation</div>
+			</div>
+			<ul class="menu-list">
+				<?php require_once RL_PLUGIN_PATH . 'views/template-parts/navigation.php'; ?>
+			</ul>
+		</div>
 
-<?php
+		<div id="plugin-content" class="column is-9">
+			<div class="subtitle"><?php echo $header_title; ?></div>
+			<section class="plugin-content-section">
+				<form id="<?php echo( $current_tab ? $current_tab : 'general-settings' ); ?>" action=" ">
+					<?php
+					if ( $current_tab ) {
+						require_once RL_PLUGIN_PATH . 'views/' . $current_tab . '.php';
+					} else {
+						require_once RL_PLUGIN_PATH . 'views/general-settings.php';
+					}
+					?>
+				</form>
+			</section>
+			<section id="footer">
+				<div class="control">
+					<button type="submit" id="submit-page" class="button is-primary">Save Changes</button>
+					<div id="saving_settings"><h3>Now Saving Your Settings</h3></div>
+				</div>
+			</section>
+		</div>
 
-require_once RL_PLUGIN_PATH . 'views/template-parts/footer.php';
-
-
+	</div>
+</div>
