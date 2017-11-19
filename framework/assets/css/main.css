@@ -75,6 +75,17 @@ ul.menu-list {
     color: white;
 }
 
+#plugin-nav .menu-list .dashicons{
+    float: none;
+    font-size: 21px;
+    margin-right: 5px;
+    padding-top: 0px;
+}
+
+#plugin-nav span.fa {
+    font-size: 20px;
+    margin-right: 5px;
+}
 
 section#footer {
     margin-top: 20px;

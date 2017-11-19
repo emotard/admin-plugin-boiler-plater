@@ -6,7 +6,8 @@ jQuery(document).ready(function ($) {
         selector:'.tinymce-textarea',
         images_upload_base_path: '/some/basepath',
         plugins: 'textcolor table code',
-        toolbar: 'code fontselect fontsizeselect formatselect forecolor backcolor table tabledelete alignjustify alignright aligncenter alignleft underline italic bold mybutton',
+        toolbar1: 'forecolor backcolor table tabledelete alignjustify alignright aligncenter alignleft underline italic bold mybutton',
+        toolbar2: "code fontselect fontsizeselect formatselect",
         setup: function (editor) {
             editor.addButton('mybutton', {
               text: 'Upload Image',
