@@ -6,23 +6,31 @@ function process_boiler_plate_repeater_fields() {
 
 	foreach($data as $key => $value){
 
-		$repeaterArray[$value['Id']][$key]['Name'] = $value['Name']; 
-		$repeaterArray[$value['Id']][$key]['Value']= $value['Value']; 
+		$repeaterArray[$value['Id']][] = [
+			'Name' => $value['Name'],
+			'Value' => $value['Value']
+		];
 
 	}
 
 	$save = [];
-	$i = 0;
+
 	foreach($repeaterArray as $key => $value){
-		$name = plugin_create_slug($value[$i]['Name']);
-		
-		$save[$key][$name][] = stripslashes($value[$i]['Value']);
-		
-		$i++;
+
+		$name = plugin_create_slug($key);
+		$save[ $name ] = [];
+
+		foreach($value as $val){
+
+			$save[$name][$val['Name']] = $val['Value'];
+		}
+
 	}
 
-	var_dump($save);
-
+	foreach($save as $key => $update){
+		update_option( PLUGIN_SLUG . '-' . $key, $update );
+	}
+	
 	wp_die();
 }
 
