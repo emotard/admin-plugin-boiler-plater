@@ -2,6 +2,7 @@
 
 $route = new Route();
 $input = new Input();
+$repeater = new Repeater();
 
 $current_tab = $_GET['current_tab'];
 

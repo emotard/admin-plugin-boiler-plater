@@ -2,6 +2,44 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
+$repeater->make_repeater([
+    'name' => 'Repeater Name',
+    'id' => 'Repeater',
+    'fields' => [
+            'text' => [
+                'name' => 'customname',
+                'placeholder' => 'Enter Text Here'
+            ],
+            'colour_picker' => [
+                'name' => 'colour-picker',
+                'default' => '#000000'
+            ],
+            'select' => [
+                'name' => 'Customselect',
+                'options' => ['option 1', 'option 2']
+            ]
+        ],
+]);
+
+
+$repeater->make_repeater([
+    'name' => 'Repeater 2',
+    'id' => 'Repeater-2',
+    'fields' => [
+            'text' => [
+                'name' => 'customname',
+                'placeholder' => 'Enter Text Here'
+            ],
+            'colour_picker' => [
+                'name' => 'colour-picker',
+                'default' => '#000000'
+            ],
+            'select' => [
+                'name' => 'Customselect',
+                'options' => ['option 1', 'option 2']
+            ]
+        ],
+]);
 
 $input->make_input_text('hello');
 $input->make_input_text('helloanother');

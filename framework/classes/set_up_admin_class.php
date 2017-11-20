@@ -36,6 +36,11 @@ Class set_up_admin{
                 RL_PLUGIN_URL . 'framework/assets/js/main.js',
                 [ 'jquery', 'custom_wp_admin_colorpicker_js' ] );
             wp_enqueue_script( 'custom_wp_admin_boilerplate_js' );
+
+            wp_register_script( 'custom_wp_admin_boilerplate_repeater_js',
+                RL_PLUGIN_URL . 'framework/assets/js/repeater.js',
+                [ 'jquery'] );
+            wp_enqueue_script( 'custom_wp_admin_boilerplate_repeater_js' );
             
             wp_register_script( 'custom_wp_admin_boilerplate_tinymce_js',
                  RL_PLUGIN_URL . 'framework/assets/js/tinymce/tinymce.min.js',
@@ -49,6 +54,8 @@ Class set_up_admin{
             wp_localize_script( 'custom_wp_admin_boilerplate_js', 'myAjax',
                 [ 'ajaxurl' => admin_url( 'admin-ajax.php' ) ] );
             wp_localize_script( 'custom_wp_admin_boilerplate_user_js', 'myAjax',
+                [ 'ajaxurl' => admin_url( 'admin-ajax.php' ) ] );
+            wp_localize_script( 'custom_wp_admin_boilerplate_repeater_js', 'myAjax',
                 [ 'ajaxurl' => admin_url( 'admin-ajax.php' ) ] );
             
             wp_register_style( 'custom_wp_admin_boilerplate_bulma_css',

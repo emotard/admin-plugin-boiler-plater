@@ -32,9 +32,9 @@ class Input {
 	 */
 	public function make_input_text( $name ) {
 
-		$name = strtolower($this->remove_spaces( $name ));
+		$name = strtolower(remove_spaces( $name ));
 
-		echo '<div class="control"><input class="input" type="text" name="' . $name . '" value="' . $this->page_options[ $name ] . '"></input></div>';
+		echo '<div class="control"><input class="input normal-input" type="text" name="' . $name . '" value="' . $this->page_options[ $name ] . '"></input></div>';
 
 	}
 
@@ -45,9 +45,9 @@ class Input {
 	 */
 	public function make_input_textarea( $name ) {
 
-		$name = strtolower($this->remove_spaces( $name ));
+		$name = strtolower(remove_spaces( $name ));
 
-		echo '<textarea class="textarea" name="' . $name . '" form="' . $this->current_tab . '">' . $this->page_options[ $name ] . '</textarea>';
+		echo '<textarea class="textarea normal-textarea" name="' . $name . '" form="' . $this->current_tab . '">' . $this->page_options[ $name ] . '</textarea>';
 	}
 
 	/**
@@ -57,9 +57,9 @@ class Input {
 	 */
 	public function make_input_tinymce( $name ) {
 
-		$name = strtolower($this->remove_spaces( $name ));
+		$name = strtolower(remove_spaces( $name ));
 
-		echo '<textarea class="textarea tinymce-textarea" name="' . $name . '" form="' . $this->current_tab . '">' . $this->page_options[ $name ]  . '</textarea>';
+		echo '<textarea class="textarea normal-textarea tinymce-textarea" name="' . $name . '" form="' . $this->current_tab . '">' . $this->page_options[ $name ]  . '</textarea>';
 	}
 
 	/**
@@ -72,11 +72,11 @@ class Input {
 
 		$html = "";
 
-		$name = strtolower($this->remove_spaces( $name ));
+		$name = strtolower(remove_spaces( $name ));
 
 		$html .= '<div class="control">
                     <div class="select">';
-		$html .= '<select name="' . $name . '" form="' . $this->current_tab . '">';
+		$html .= '<select class="normal-select" name="' . $name . '" form="' . $this->current_tab . '">';
 		$html .= '<option value="">Select Option</option>';
 		foreach ( $options as $key => $option ) {
 			$html .= '<option value="' . $option . '"' . ( $this->page_options[ $name ] == $option ? 'selected="selected"' : '' ) . '">' . ucfirst( $option ) . '</option>';
@@ -100,15 +100,8 @@ class Input {
 
 		$name = plugin_create_slug( $name );
 
-		echo '<div class="control"><input class="input" id="rl-color-picker" style="background-color: ' . $this->page_options[ $name ] . '" type="text" name="' . $name . '" value="' . $this->page_options[ $name ] . '"></input></div>';
+		echo '<div class="control"><input class="input normal-input rl-colour-picker" id="rl-colour-picker" style="background-color: ' . $this->page_options[ $name ] . '" type="text" name="' . $name . '" value="' . $this->page_options[ $name ] . '"></input></div>';
 
     }
     
-    private function remove_spaces($name){
-        
-        $replace = str_replace(' ', '-', $name);
-        
-        return $replace;
-        
-    }
 }

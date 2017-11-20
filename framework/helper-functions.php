@@ -48,4 +48,13 @@ function plugin_create_slug( $route_name = '' ) {
 }
 
 
+function remove_spaces($name){
+	
+	$replace = str_replace(' ', '-', $name);
+	
+	return $replace;
+	
+}
+
+
 

@@ -12,6 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
  */
 require_once 'framework/classes/route_class.php';
 require_once 'framework/classes/make_input_class.php';
+require_once 'framework/classes/repeater/make_repeater_class.php';
 require_once 'framework/classes/set_up_admin_class.php';
 require_once 'framework/helper-functions.php';
 

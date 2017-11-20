@@ -44,7 +44,6 @@ jQuery(document).ready(function ($) {
        
     });
 
-
     function save_input_text_fields(){
         var current_tab = getUrlVars()["current_tab"];
         var data = [];
@@ -56,7 +55,7 @@ jQuery(document).ready(function ($) {
         }
 
 
-        $('#' + current_tab + ' input, #' + current_tab + ' select').each(
+        $('#' + current_tab + ' .normal-input, #' + current_tab + ' .normal-select').each(
             function(index){  
                 var input = $(this);
 
@@ -68,8 +67,7 @@ jQuery(document).ready(function ($) {
             }
         );
 
-
-        $('textarea').each(
+        $('.normal-textarea').each(
             function(index){
 
             var textarea = $(this);
@@ -100,26 +98,60 @@ jQuery(document).ready(function ($) {
             type : 'post',
             data : {action: "process_boiler_plate_page_fields", current_tab: current_tab, data: data},
             success: function(response) {
-
-             $('#saving_settings').fadeOut('slow');
-
-              setTimeout(function(){
-
-            
-                $('#saving_settings').html('<h3>Settings Saved</h3>')
-                $('#saving_settings').fadeIn('slow')
-
-                setTimeout(function(){
-                 window.location.reload();
-                },2000);
-
-              },2000);
-
+                save_repeater_fields();
             }
          })   
-   
        
     }
+
+    function save_repeater_fields(){
+
+        var current_tab = getUrlVars()["current_tab"];
+
+        if(current_tab){
+            current_tab = current_tab;
+        }else{
+            current_tab = 'general-settings';
+        }
+
+        var data = [];
+
+        $('.plugin-repeater').each(function(index){
+            var id = $(this).attr('id');
+            var i = index;
+
+            data[i] = [];
+            data[i] = {id};
+
+        });
+
+        $.map(data, function(el){
+            console.log(el);
+            $('#' + el.id + ' .normal-input, #' + el.id + ' .normal-select').each(
+                function(index){  
+                    var input = $(this);
+                    el.id['data'].push({
+                        'Name': input.attr('name'),
+                        'Value': input.val()
+                    });
+                  //  alert('Type: ' + input.attr('type') + 'Name: ' + input.attr('name') + 'Value: ' + input.val());
+                }
+            );
+
+        });
+
+        $.ajax({
+            url : myAjax.ajaxurl,
+            type : 'post',
+            data : {action: "process_boiler_plate_repeater_fields", current_tab: current_tab, data: data},
+            success: function(response) {
+              //  save_repeater_fields();
+            }
+         })   
+        
+
+    }
+
 
     function getUrlVars()
     {
@@ -136,27 +168,28 @@ jQuery(document).ready(function ($) {
 
   
 
-    $('#rl-color-picker').each(function(){
+    $('.rl-colour-picker').each(function(index){
         
-                $input = $(this);
+        var input = $(this);
         
-                $input.ColorPicker({
-                    onShow: function (colpkr) {
-                        $(colpkr).fadeIn(500);
-                        return false;
-                    },
-                    onHide: function (colpkr) {
-                        $(colpkr).fadeOut(500);
-                        return false;
-                    },
-                    onChange: function (hsb, hex, rgb) {
-                        $input.css('backgroundColor', '#' + hex);
-                        $input.val('#' + hex);
-                }
+            input.ColorPicker({
+            
+            onShow: function (colpkr) {
+                $(colpkr).fadeIn(500);
+                return false;
+            },
+            onHide: function (colpkr) {
+                $(colpkr).fadeOut(500);
+                return false;
+            },
+            
+            onChange: function (hsb, hex, rgb) {
+                input.css('backgroundColor', '#' + hex);
+                input.val('#' + hex);
+            }
+              
         });
-        
-        
-        
+           
     });
         
         
