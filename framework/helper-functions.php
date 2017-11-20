@@ -1,5 +1,35 @@
 <?php
 
+function process_boiler_plate_repeater_fields() {
+	$data = $_POST['data'];
+	$repeaterArray = [];
+
+	foreach($data as $key => $value){
+
+		$repeaterArray[$value['Id']][$key]['Name'] = $value['Name']; 
+		$repeaterArray[$value['Id']][$key]['Value']= $value['Value']; 
+
+	}
+
+	$save = [];
+	$i = 0;
+	foreach($repeaterArray as $key => $value){
+		$name = plugin_create_slug($value[$i]['Name']);
+		
+		$save[$key][$name][] = stripslashes($value[$i]['Value']);
+		
+		$i++;
+	}
+
+	var_dump($save);
+
+	wp_die();
+}
+
+
+add_action('wp_ajax_process_boiler_plate_repeater_fields', 
+	'process_boiler_plate_repeater_fields');
+
 /**
  * Update the options for the given page.
  */

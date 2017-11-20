@@ -4,9 +4,24 @@ jQuery(document).ready(function ($) {
      
         var table_id = $(this).parents('table').attr('id');
 
+        count = $('#' + table_id + ' tbody tr').size();
+
         var tBody = $('#' + table_id).find('tbody'),
             trLast = tBody.find('tr:last'),
             trNew = trLast.clone();
+            trNew.find('input, select, textarea').each(function(){
+
+                var currentNameAttr = $(this).attr('name');
+
+                var noNum = currentNameAttr.replace(/\d+/g, '');
+                
+                var newNameAttr = noNum + count;
+
+                $(this).attr('name', newNameAttr); 
+
+            });
+
+           
 
         trLast.after(trNew);
 

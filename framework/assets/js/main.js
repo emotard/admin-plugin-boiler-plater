@@ -115,43 +115,48 @@ jQuery(document).ready(function ($) {
         }
 
         var data = [];
-
         $('.plugin-repeater').each(function(index){
             var id = $(this).attr('id');
-            var i = index;
 
-            data[i] = [];
-            data[i] = {id};
+            data[index] = [];
+            data[index]['id'] = [];
 
-        });
-
-        $.map(data, function(el){
-            console.log(el);
-            $('#' + el.id + ' .normal-input, #' + el.id + ' .normal-select').each(
-                function(index){  
-                    var input = $(this);
-                    el.id['data'].push({
-                        'Name': input.attr('name'),
-                        'Value': input.val()
-                    });
-                  //  alert('Type: ' + input.attr('type') + 'Name: ' + input.attr('name') + 'Value: ' + input.val());
-                }
-            );
+            data[index].id.push(id);
 
         });
 
+        var results = [];
+
+        $.map(data, function(el, i){
+                var id = el.id[0];
+                $('#' + el.id[0] + ' .repeater-input, #' + el.id[0] + ' .repeater-select').each(
+                    function(index){ 
+                        var input = $(this);
+                       
+                        results.push({
+                            'Id' : id,
+                            'Name': input.attr('name'),
+                            'Value': input.val()
+                        });
+                      //  alert('Type: ' + input.attr('type') + 'Name: ' + input.attr('name') + 'Value: ' + input.val());
+                    }
+                );
+          
+    
+            });
+        
         $.ajax({
             url : myAjax.ajaxurl,
-            type : 'post',
-            data : {action: "process_boiler_plate_repeater_fields", current_tab: current_tab, data: data},
+            type : "post",
+            data : {action: "process_boiler_plate_repeater_fields", "current_tab": current_tab, "data": results},
             success: function(response) {
-              //  save_repeater_fields();
-            }
-         })   
+              
+            },error: function (xhr, ajaxOptions, thrownError) {alert("ERROR:" + xhr.responseText+" - "+thrownError);}
+
+        });
+
         
-
     }
-
 
     function getUrlVars()
     {

@@ -7,17 +7,13 @@ $repeater->make_repeater([
     'id' => 'Repeater',
     'fields' => [
             'text' => [
-                'name' => 'customname',
+                'name' => 'custom-name',
                 'placeholder' => 'Enter Text Here'
             ],
             'colour_picker' => [
                 'name' => 'colour-picker',
                 'default' => '#000000'
             ],
-            'select' => [
-                'name' => 'Customselect',
-                'options' => ['option 1', 'option 2']
-            ]
         ],
 ]);
 
@@ -27,17 +23,13 @@ $repeater->make_repeater([
     'id' => 'Repeater-2',
     'fields' => [
             'text' => [
-                'name' => 'customname',
+                'name' => 'second-repeat',
                 'placeholder' => 'Enter Text Here'
             ],
             'colour_picker' => [
                 'name' => 'colour-picker',
                 'default' => '#000000'
             ],
-            'select' => [
-                'name' => 'Customselect',
-                'options' => ['option 1', 'option 2']
-            ]
         ],
 ]);
 
