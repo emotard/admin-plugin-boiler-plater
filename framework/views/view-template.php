@@ -2,7 +2,7 @@
 
 namespace RLFramework; 
 
-( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 $route = new Route();
 $input = new Input();

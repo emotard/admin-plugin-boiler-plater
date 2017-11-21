@@ -1,6 +1,6 @@
 <?php
 
-( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 function process_boiler_plate_repeater_fields() {
 	$data = $_POST['data'];
