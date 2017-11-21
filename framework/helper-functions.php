@@ -2,8 +2,12 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
+require_once 'plugin_activation.php';
+require_once 'plugin_delete.php';
+
 function process_boiler_plate_repeater_fields() {
 	$data = $_POST['data'];
+	$current_tab  = $_POST['current_tab'];
 	$repeaterArray = [];
 
 	foreach($data as $key => $value){
@@ -31,6 +35,7 @@ function process_boiler_plate_repeater_fields() {
 
 	foreach($save as $key => $update){
 		update_option( PLUGIN_SLUG . '-' . $key, $update );
+		rl_update_db($current_tab, $key, $update);
 	}
 	
 	wp_die();
@@ -51,6 +56,8 @@ function process_boiler_plate_page_fields() {
 
 	foreach ( $data as $key => $value ) {
 
+		rl_update_db($current_tab, $value['Name'], $value['Value']);
+
 		$name = plugin_create_slug($value['Name']);
 
 		$save[ $name ] = stripslashes($value['Value']);
@@ -59,8 +66,8 @@ function process_boiler_plate_page_fields() {
     
   //var_dump($save);
 
-	update_option( PLUGIN_SLUG . '-' . $current_tab, $save );
-
+  	update_option( PLUGIN_SLUG . '-' . $current_tab, $save);
+   
 	wp_die();
 
 }
@@ -94,6 +101,44 @@ function remove_spaces($name){
 	
 	return $replace;
 	
+}
+
+
+function rl_update_db($current_tab, $key, $value){
+	global $wpdb;
+
+	if(is_array($value)){
+		$value = serialize($value);
+	}
+	$table_name = $wpdb->prefix . 'rl_framework';
+
+	$check = $wpdb->get_results("SELECT * FROM $table_name WHERE meta_key = '".$key."'");
+
+	if($check){
+		$wpdb->update( 
+			$table_name, 
+			array( 
+				'page' => $current_tab,
+				'meta_key' => $key,	
+				'meta_value' => $value
+			), 
+			array( 'meta_key' => $key ), 
+			array( 
+				'%s',	// value1
+				'%s'	// value2
+			), 
+			array( '%s' ) 
+		);
+	}else{
+		$wpdb->insert($table_name, array(
+			'page' => $current_tab,
+			'meta_key' => $key,
+			'meta_value' => $value,
+		));
+	}
+
+
+
 }
 
 

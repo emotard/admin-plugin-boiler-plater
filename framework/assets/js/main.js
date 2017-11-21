@@ -151,8 +151,7 @@ jQuery(document).ready(function ($) {
             data : {action: "process_boiler_plate_repeater_fields", "current_tab": current_tab, "data": results},
             success: function(response) {
               
-            },error: function (xhr, ajaxOptions, thrownError) {alert("ERROR:" + xhr.responseText+" - "+thrownError);}
-
+            }
         });
 
         
