@@ -10,12 +10,12 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
  * Author: Robert Leigh
  * Author URI: #
  */
-require_once 'framework/classes/route_class.php';
-require_once 'framework/classes/make_input_class.php';
-require_once 'framework/classes/repeater/make_repeater_class.php';
-require_once 'framework/classes/set_up_admin_class.php';
+
+
 require_once 'framework/helper-functions.php';
 
+require_once( 'vendor/autoload.php' );
+RLFramework\SetUpAdmin::runner();
 define( 'PLUGIN_NAME', 'New Plugin' );
 $url = plugin_create_slug(PLUGIN_NAME);
 define( 'PLUGIN_SLUG', $url );

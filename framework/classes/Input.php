@@ -1,5 +1,7 @@
 <?php
 
+namespace RLFramework;
+
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 class Input {

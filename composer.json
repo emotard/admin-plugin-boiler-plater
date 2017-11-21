@@ -1,0 +1,11 @@
+{   
+    "type": "wordpress-plugin",
+    "autoload": {
+        "psr-4": {
+            "RLFramework\\": [
+                "framework/classes", 
+                "framework/classes/repeater"
+            ]
+        }
+    }
+}

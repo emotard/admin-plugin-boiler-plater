@@ -1,7 +1,10 @@
 <?php
 
+namespace RLFramework;
 
-Class set_up_admin{
+( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+
+Class SetUpAdmin{
     
         public function __construct(){
     
@@ -94,8 +97,10 @@ Class set_up_admin{
         require_once   RL_PLUGIN_PATH . 'framework/views/view-template.php';
   
     }
+
+    public static function runner()
+    {
+        new SetUpAdmin();
+    }
     
 }
-    
-new set_up_admin();
-    

@@ -1,7 +1,5 @@
 <?php 
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
-
 $repeater->make_repeater([
     'name' => 'Repeater Name',
     'id' => 'Repeater',
