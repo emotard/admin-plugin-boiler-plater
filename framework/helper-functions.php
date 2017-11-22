@@ -10,32 +10,46 @@ function process_boiler_plate_repeater_fields() {
 	$current_tab  = $_POST['current_tab'];
 	$repeaterArray = [];
 
+	var_dump($data);
 	foreach($data as $key => $value){
-
-		$repeaterArray[$value['Id']][] = [
-			'Name' => $value['Name'],
-			'Value' => $value['Value']
+		
+		$repeaterArray[$value['id']][] = [
+			'fields' => [
+				'type' => $value['fields']['type'],
+				'name' => $value['fields']['name'],
+				'value' => $value['fields']['value']
+			]
 		];
 
 	}
 
 	$save = [];
+	
 
 	foreach($repeaterArray as $key => $value){
 
 		$name = plugin_create_slug($key);
 		$save[ $name ] = [];
 
-		foreach($value as $val){
+		foreach($value as $key => $val){
 
-			$save[$name][$val['Name']] = $val['Value'];
+			$save[$name][$key] = [
+				'type' => $val['fields']['type'],
+				'options' => [
+					'name' => $val['fields']['name'],
+					'value' => $val['fields']['value'],
+				],
+			];
+
 		}
 
 	}
 
 	foreach($save as $key => $update){
+
 		update_option( PLUGIN_SLUG . '-' . $key, $update );
 		rl_update_db($current_tab, $key, $update);
+
 	}
 	
 	wp_die();
@@ -56,11 +70,11 @@ function process_boiler_plate_page_fields() {
 
 	foreach ( $data as $key => $value ) {
 
-		rl_update_db($current_tab, $value['Name'], $value['Value']);
+		rl_update_db($current_tab, $value['name'], $value['value']);
 
-		$name = plugin_create_slug($value['Name']);
+		$name = plugin_create_slug($value['name']);
 
-		$save[ $name ] = stripslashes($value['Value']);
+		$save[ $name ] = stripslashes($value['value']);
 
     }
     
@@ -102,6 +116,31 @@ function remove_spaces($name){
 	return $replace;
 	
 }
+
+
+function rl_get_option($page, $key){
+	global $wpdb;
+
+	$table_name = $wpdb->prefix . 'rl_framework';
+
+	$results = $wpdb->get_results("SELECT meta_value FROM $table_name WHERE page = '".$page."' AND meta_key = '".$key."'");
+
+	$uns = unserialize($results[0]->meta_value);
+
+	if($uns){
+		
+		$results = $uns;
+	
+	}else{
+
+		$results = $results[0]->meta_value;
+		
+	}
+	
+	return $results;
+
+}
+
 
 
 function rl_update_db($current_tab, $key, $value){

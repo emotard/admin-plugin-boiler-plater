@@ -34,10 +34,15 @@ Class SetUpAdmin{
                 RL_PLUGIN_URL . 'framework/assets/js/colorpicker.js',
                 [ 'jquery' ] );
             wp_enqueue_script( 'custom_wp_admin_colorpicker_js' );
-            
+
+            wp_register_script( 'custom_wp_admin_json_js',
+                '//cdnjs.cloudflare.com/ajax/libs/jquery-json/2.6.0/jquery.json.min.js',
+                [ 'jquery' ] );
+            wp_enqueue_script( 'custom_wp_admin_json_js' );
+           
             wp_register_script( 'custom_wp_admin_boilerplate_js',
                 RL_PLUGIN_URL . 'framework/assets/js/main.js',
-                [ 'jquery', 'custom_wp_admin_colorpicker_js' ] );
+                [ 'jquery', 'custom_wp_admin_json_js', 'custom_wp_admin_colorpicker_js' ] );
             wp_enqueue_script( 'custom_wp_admin_boilerplate_js' );
 
             wp_register_script( 'custom_wp_admin_boilerplate_repeater_js',

@@ -8,16 +8,23 @@ Class Repeater{
 
     public $repeater_name;
     public $repeater_options;
-
+    private $saved_options;
+    private $current_tab;
 
     function __construct(){
+
+		if ( ! empty( $_GET['current_tab'] ) ) {
+			$this->current_tab = $_GET['current_tab'];
+		} else {
+			$this->current_tab = 'general-settings';
+		}
 
     }
 
     function make_repeater($repeater_options){
 
         $this->repeater_name = $repeater_options['name'];
-
+        $this->saved_options = rl_get_option($this->current_tab, $repeater_options['name']);
         $this->repeater_options = $repeater_options;
 
         $html .= '<table class="table plugin-repeater" id="' . strtolower(remove_spaces($this->repeater_options['id'])) .'">';

@@ -60,8 +60,8 @@ jQuery(document).ready(function ($) {
                 var input = $(this);
 
                 data.push({
-                    'Name': input.attr('name'),
-                    'Value': input.val()
+                    'name': input.attr('name'),
+                    'value': input.val()
                 });
               //  alert('Type: ' + input.attr('type') + 'Name: ' + input.attr('name') + 'Value: ' + input.val());
             }
@@ -76,16 +76,16 @@ jQuery(document).ready(function ($) {
             if(textarea.hasClass('tinymce-textarea')){
                 
                 data.push({
-                    'Name': id,
-                    'Value': tinymce.get(id).getContent()
+                    'name': id,
+                    'value': tinymce.get(id).getContent()
                   });
      
             }else{
 
                 data.push({
                     
-                    'Name': textarea.attr('name'),
-                    'Value': textarea.val()
+                    'name': textarea.attr('name'),
+                    'value': textarea.val()
 
                 });
             }
@@ -115,40 +115,45 @@ jQuery(document).ready(function ($) {
         }
 
         var data = [];
+
         $('.plugin-repeater').each(function(index){
             var id = $(this).attr('id');
 
-            data[index] = [];
-            data[index]['id'] = [];
-
-            data[index].id.push(id);
+            data.push(id);
 
         });
+
 
         var results = [];
 
         $.map(data, function(el, i){
-                var id = el.id[0];
-                $('#' + el.id[0] + ' .repeater-input, #' + el.id[0] + ' .repeater-select').each(
-                    function(index){ 
+
+            results[el] = [];
+
+            $('#' + el + ' tbody tr').each(
+                function(index){  
+
+                  results[el][index] = [];
+
+                  $(this).find('.repeater-input, .repeater-select').each(function(){
                         var input = $(this);
-                       
-                        results.push({
-                            'Id' : id,
-                            'Name': input.attr('name'),
-                            'Value': input.val()
+                        var data = {};
+                        data.name = input.attr('name');
+                        results[el][index].push({
+                            'name': input.attr('name'),
+                            'value': input.val()
                         });
-                      //  alert('Type: ' + input.attr('type') + 'Name: ' + input.attr('name') + 'Value: ' + input.val());
-                    }
-                );
-          
-    
-            });
-        
+                  });
+                }
+            );
+        });
+
         $.ajax({
             url : myAjax.ajaxurl,
             type : "post",
-            data : {action: "process_boiler_plate_repeater_fields", "current_tab": current_tab, "data": results},
+            ontentType: "application/json; charset=utf-8",
+            data : {action: "process_boiler_plate_repeater_fields", "current_tab": current_tab},
+            dataType: "json",
             success: function(response) {
               
             }
