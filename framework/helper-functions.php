@@ -7,40 +7,37 @@ require_once 'plugin_delete.php';
 
 function process_boiler_plate_repeater_fields() {
 	$data = $_POST['data'];
+
 	$current_tab  = $_POST['current_tab'];
 	$repeaterArray = [];
+	
+	$repeaters = $data[0];
 
-	var_dump($data);
-	foreach($data as $key => $value){
+	foreach($repeaters as $r_name => $value ){
 		
-		$repeaterArray[$value['id']][] = [
-			'fields' => [
-				'type' => $value['fields']['type'],
-				'name' => $value['fields']['name'],
-				'value' => $value['fields']['value']
-			]
-		];
+		foreach($value as $key => $val){
+
+			$repeaterArray[$r_name][] = $val; 
+
+		}
 
 	}
 
+	$i = 0; 
 	$save = [];
-	
-
 	foreach($repeaterArray as $key => $value){
 
-		$name = plugin_create_slug($key);
-		$save[ $name ] = [];
+		$save[$key] = [];
 
-		foreach($value as $key => $val){
+		$count = count($value);
 
-			$save[$name][$key] = [
-				'type' => $val['fields']['type'],
-				'options' => [
-					'name' => $val['fields']['name'],
-					'value' => $val['fields']['value'],
-				],
-			];
+		while($i < $count){
 
+			foreach($value[$i] as $k => $v){
+				$save[$key][$v['label']][] = $v['fields'];
+			}
+
+			$i++;
 		}
 
 	}
@@ -127,20 +124,42 @@ function rl_get_option($page, $key){
 
 	$uns = unserialize($results[0]->meta_value);
 
+
 	if($uns){
 		
 		$results = $uns;
-	
+		
 	}else{
 
 		$results = $results[0]->meta_value;
 		
 	}
-	
+
 	return $results;
 
 }
 
+
+function rl_have_rows($page, $key){
+
+	global $wpdb;
+	
+	$table_name = $wpdb->prefix . 'rl_framework';
+	
+	$results = $wpdb->get_results("SELECT meta_value FROM $table_name WHERE page = '".$page."' AND meta_key = '".$key."'");
+
+	if(is_array($results)){
+		return true;
+	}
+
+	return false;
+
+
+}
+
+function rl_the_row(){
+	echo 'row';
+}
 
 
 function rl_update_db($current_tab, $key, $value){

@@ -92,6 +92,15 @@ ul.menu-list {
     margin-right: 5px;
 }
 
+td.remove-row {
+    width: 10px;
+    padding: 0px;
+    position: relative;
+    top: 12px;
+    color: red;
+    cursor: pointer;
+}
+
 section#footer {
     margin-top: 20px;
     float: right;

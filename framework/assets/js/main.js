@@ -125,37 +125,43 @@ jQuery(document).ready(function ($) {
 
 
         var results = [];
-
+        var obj = {}
         $.map(data, function(el, i){
-
-            results[el] = [];
+            
+            obj[el] = [];
 
             $('#' + el + ' tbody tr').each(
                 function(index){  
 
-                  results[el][index] = [];
+                  obj[el][index] = [];
 
                   $(this).find('.repeater-input, .repeater-select').each(function(){
                         var input = $(this);
-                        var data = {};
-                        data.name = input.attr('name');
-                        results[el][index].push({
-                            'name': input.attr('name'),
-                            'value': input.val()
+
+                        obj[el][index].push({
+                            'label': input.data('label'),
+                            'fields': {
+                                'type': input.data('type'),
+                                'name': input.attr('name'),
+                                'value': input.val()
+                            }
                         });
                   });
                 }
             );
+
         });
+
+        results.push(obj);
 
         $.ajax({
             url : myAjax.ajaxurl,
             type : "post",
             ontentType: "application/json; charset=utf-8",
-            data : {action: "process_boiler_plate_repeater_fields", "current_tab": current_tab},
+            data : {action: "process_boiler_plate_repeater_fields", "current_tab": current_tab, 'data': results},
             dataType: "json",
             success: function(response) {
-              
+              //  location.reload();
             }
         });
 
@@ -200,6 +206,20 @@ jQuery(document).ready(function ($) {
         });
            
     });
+
+    $('.remove-row').each(function(index){
+        
+        $(this).on('click', function(){
+
+            $(this).parent().remove();
+
+        });
+        
+    });
+
+
+
+
         
         
 

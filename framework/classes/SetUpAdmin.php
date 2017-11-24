@@ -46,7 +46,7 @@ Class SetUpAdmin{
             wp_enqueue_script( 'custom_wp_admin_boilerplate_js' );
 
             wp_register_script( 'custom_wp_admin_boilerplate_repeater_js',
-                RL_PLUGIN_URL . 'framework/assets/js/repeater.js',
+                RL_PLUGIN_URL . 'framework/assets/js/repeat-row.js',
                 [ 'jquery'] );
             wp_enqueue_script( 'custom_wp_admin_boilerplate_repeater_js' );
             

@@ -11,13 +11,14 @@ jQuery(document).ready(function ($) {
             trNew = trLast.clone();
             trNew.find('input, select, textarea').each(function(){
 
+                $(this).val('');
+                $(this).css('background-color', '#fff');
+
                 var currentNameAttr = $(this).attr('name');
 
-                var noNum = currentNameAttr.replace(/\d+/g, '');
-                
-                var newNameAttr = noNum + count;
+                var newName = currentNameAttr + count;
 
-                $(this).attr('name', newNameAttr); 
+                $(this).attr('name', newName); 
 
             });
 
@@ -25,11 +26,12 @@ jQuery(document).ready(function ($) {
 
         trLast.after(trNew);
 
-        reinit_colour_picker();
+        reinit_colour_picker_remove();
 
    });
 
-   function reinit_colour_picker(){
+
+   function reinit_colour_picker_remove(){
 
       $('.rl-colour-picker').each(function(index){
         
@@ -53,6 +55,16 @@ jQuery(document).ready(function ($) {
               
         });
           
+    });
+
+    $('.remove-row').each(function(index){
+        
+        $(this).on('click', function(){
+
+            $(this).parent().remove();
+
+        });
+        
     });
       
   }
