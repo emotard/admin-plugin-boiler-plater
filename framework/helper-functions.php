@@ -10,43 +10,20 @@ function process_boiler_plate_repeater_fields() {
 
 	$current_tab  = $_POST['current_tab'];
 	$repeaterArray = [];
-	
 	$repeaters = $data[0];
-
 	foreach($repeaters as $r_name => $value ){
-		
 		foreach($value as $key => $val){
-
 			$repeaterArray[$r_name][] = $val; 
-
 		}
-
 	}
-
-	$i = 0; 
 	$save = [];
 	foreach($repeaterArray as $key => $value){
-
-		$save[$key] = [];
-
-		$count = count($value);
-
-		while($i < $count){
-
-			foreach($value[$i] as $k => $v){
-				$save[$key][$v['label']][] = $v['fields'];
-			}
-
-			$i++;
-		}
-
+		$save[$key] = $value;
 	}
 
 	foreach($save as $key => $update){
-
 		update_option( PLUGIN_SLUG . '-' . $key, $update );
 		rl_update_db($current_tab, $key, $update);
-
 	}
 	
 	wp_die();
@@ -141,11 +118,8 @@ function rl_get_option($page, $key){
 
 
 function rl_have_rows($page, $key){
-
 	global $wpdb;
-	
 	$table_name = $wpdb->prefix . 'rl_framework';
-	
 	$results = $wpdb->get_results("SELECT meta_value FROM $table_name WHERE page = '".$page."' AND meta_key = '".$key."'");
 
 	if(is_array($results)){

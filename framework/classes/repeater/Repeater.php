@@ -19,55 +19,19 @@ Class Repeater{
     }
 
     function make_repeater($repeater_options){
-
+        
+        // Get name of repeater 
         $repeater_name = $repeater_options['name'];
-
+        // Get current saved options if any;
         $saved_options = rl_get_option($this->current_tab, remove_spaces(strtolower($repeater_options['id'])));
-
-
+        // Count Current number of fields
         $count1 = count($repeater_options['fields']);
-        $count2 = count($saved_options[0]['fields']);
-
+        // Count first number of saved fields
+        $count2 = count($saved_options[0]);
+        // Get Table id for sql search strip spaces and put to lowercase.
         $table_id =  strtolower(remove_spaces($repeater_options['id']));
        
-     
-
-        $html .= '<table class="table plugin-repeater" id="' . $table_id  .'">';
-            $html .= '<thead><tr><th><h3>'. $repeater_name .'</h3></th></tr></thead>';
-            $html .= '<tfoot><tr><th><button type="button" id="add-row" class="button is-primary add-row">Add Row</button></th></tr></tfoot>';
-                $html .= '<tbody>';
-                            if($repeater_options['headers']){
-                                $html .= '<tr class="header-row">';
-                                    foreach($repeater_options['headers'] as $header){
-                                        $html .= '<td>'.$header.'</td>';
-                                    }
-                                $html .= '</tr>';
-                            }
-                            if($saved_options){
-                            
-                                foreach ($repeater_options['fields'] as $key => $options){
-                                    
-                                        $saved_results = $saved_options[$options['label']];
-                                    
-                                        echo '<pre>' . var_export($saved_results, true) . '</pre>';
-                                                                        
-                                 };
-                                 
-                            }else{
-                                $hmtl .= '<tr>';
-                                foreach ($repeater_options['fields'] as $key => $options){
-
-                                        $run = $options['type'];
-                                        $html .= $this->$run($options);
-                                    
-                                };
-                                $html .= '<td class="remove-row">X</td>';
-                                $html .= '</tr>';   
-                            }
-                $html .= '</tbody>';
-        $html .= '</table>';
-
-        echo $html;
+        require 'repeater-table.php';
 
     }
 

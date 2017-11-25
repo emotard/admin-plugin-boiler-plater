@@ -6,26 +6,32 @@ $option = rl_get_option('general-settings', 'single-textarea');
 $repeater->make_repeater([
     'name' => 'Repeater Name',
     'id' => 'Repeater',
-    'headers' => ['Text input', 'Colour 1 input', 'Colour 2 input'],
+    'headers' => ['Country', 'Address', 'Post Code', 'Color'],
     'fields' => [
         '0' => [
             'type' => 'text',
-            'label' => 'custom-test-field',
+            'label' => 'country',
             'name' => 'second-repeat',
-            'placeholder' => 'Enter Text Here'
+            'placeholder' => 'Enter Country'
         ],
         '1' => [
-            'type' => 'colour_picker',
-            'label' => 'custom-color-picker',
-            'name' => 'colour-picker',
-            'value' => '#000000'
+            'type' => 'text',
+            'label' => 'address',
+            'name' => 'location-address',
+            'placeholder' => 'Enter Address'
         ],
         '2' => [
+            'type' => 'text',
+            'label' => 'post-code',
+            'name' => 'location-post-code',
+            'placeholder' => 'Enter Post Code'
+        ],
+        '3' => [
             'type' => 'colour_picker',
             'label' => 'custom-color-picker-2',
             'name' => 'colour-picker-2',
             'value' => '#000000'
-        ],
+        ]
     ],
 ]);
 

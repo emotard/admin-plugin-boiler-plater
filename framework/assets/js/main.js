@@ -161,7 +161,7 @@ jQuery(document).ready(function ($) {
             data : {action: "process_boiler_plate_repeater_fields", "current_tab": current_tab, 'data': results},
             dataType: "json",
             success: function(response) {
-              //  location.reload();
+              location.reload();
             }
         });
 
