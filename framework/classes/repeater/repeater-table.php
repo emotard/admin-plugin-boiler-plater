@@ -16,7 +16,7 @@
                     <tr>
                         <?php foreach($row as $key => $field): 
                             $run = $field['fields']['type'];
-                            echo $this->$run($field['fields']);
+                            echo $this->$run($field['fields'], $field['label']);
                          endforeach; ?>
                     <?php if($i != 0 ) : ?> <td class="remove-row">X</td> <?php endif; $i++; ?>
                     </tr>

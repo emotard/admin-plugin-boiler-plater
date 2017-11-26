@@ -34,9 +34,11 @@ class Input {
 	 */
 	public function make_input_text( $name ) {
 
+		$value = rl_get_option($this->current_tab, $name);
+
 		$name = strtolower(remove_spaces( $name ));
 
-		echo '<div class="control"><input class="input normal-input" type="text" name="' . $name . '" value="' . $this->page_options[ $name ] . '"></input></div>';
+		echo '<div class="control"><input class="input normal-input" type="text" name="' . $name . '" value="' . $value . '"></input></div>';
 
 	}
 
@@ -47,9 +49,11 @@ class Input {
 	 */
 	public function make_input_textarea( $name ) {
 
+		$value = rl_get_option($this->current_tab, $name);
+
 		$name = strtolower(remove_spaces( $name ));
 
-		echo '<textarea class="textarea normal-textarea" name="' . $name . '" form="' . $this->current_tab . '">' . $this->page_options[ $name ] . '</textarea>';
+		echo '<textarea class="textarea normal-textarea" name="' . $name . '" form="' . $this->current_tab . '">' . $value . '</textarea>';
 	}
 
 	/**
@@ -59,9 +63,11 @@ class Input {
 	 */
 	public function make_input_tinymce( $name ) {
 
+		$value = rl_get_option($this->current_tab, $name);
+
 		$name = strtolower(remove_spaces( $name ));
 
-		echo '<textarea class="textarea normal-textarea tinymce-textarea" name="' . $name . '" form="' . $this->current_tab . '">' . $this->page_options[ $name ]  . '</textarea>';
+		echo '<textarea class="textarea normal-textarea tinymce-textarea" name="' . $name . '" form="' . $this->current_tab . '">' . $value  . '</textarea>';
 	}
 
 	/**
@@ -72,6 +78,8 @@ class Input {
 	 */
 	public function make_input_select( $name, $options = [] ) {
 
+		$value = rl_get_option($this->current_tab, $name);
+
 		$html = "";
 
 		$name = strtolower(remove_spaces( $name ));
@@ -81,7 +89,7 @@ class Input {
 		$html .= '<select class="normal-select" name="' . $name . '" form="' . $this->current_tab . '">';
 		$html .= '<option value="">Select Option</option>';
 		foreach ( $options as $key => $option ) {
-			$html .= '<option value="' . $option . '"' . ( $this->page_options[ $name ] == $option ? 'selected="selected"' : '' ) . '">' . ucfirst( $option ) . '</option>';
+			$html .= '<option value="' . $option . '"' . ( $value == $option ? 'selected="selected"' : '' ) . '">' . ucfirst( $option ) . '</option>';
 		}
 
 		$html .= '</select>';
@@ -100,9 +108,11 @@ class Input {
 	 */
 	public function make_input_colour_picker( $name ) {
 
+		$value = rl_get_option($this->current_tab, $name);
+
 		$name = plugin_create_slug( $name );
 
-		echo '<div class="control"><input class="input normal-input rl-colour-picker" id="rl-colour-picker" style="background-color: ' . $this->page_options[ $name ] . '" type="text" name="' . $name . '" value="' . $this->page_options[ $name ] . '"></input></div>';
+		echo '<div class="control"><input class="input normal-input rl-colour-picker" id="rl-colour-picker" style="background-color: ' . $value . '" type="text" name="' . $name . '" value="' . $value . '"></input></div>';
 
     }
     

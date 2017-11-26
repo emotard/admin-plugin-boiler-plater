@@ -23,7 +23,6 @@ function process_boiler_plate_repeater_fields() {
 	}
 
 	foreach($save as $key => $update){
-		update_option( PLUGIN_SLUG . '-' . $key, $update );
 		rl_update_db($current_tab, $key, $update);
 	}
 	
@@ -41,22 +40,12 @@ function process_boiler_plate_page_fields() {
 	$data = $_POST['data'];
 	$current_tab  = $_POST['current_tab'];
 
-	$save = [];
+	foreach ( $data as $key => $value ) {	
 
-	foreach ( $data as $key => $value ) {
-
-		rl_update_db($current_tab, $value['name'], $value['value']);
-
-		$name = plugin_create_slug($value['name']);
-
-		$save[ $name ] = stripslashes($value['value']);
-
-    }
-    
-  //var_dump($save);
-
-  	update_option( PLUGIN_SLUG . '-' . $current_tab, $save);
-   
+		$stripdata = stripslashes($value['value']);
+		rl_update_db($current_tab, $value['name'], $stripdata);
+	}
+	
 	wp_die();
 
 }
@@ -130,13 +119,15 @@ function rl_get_rows($page, $key){
 
 function rl_update_db($current_tab, $key, $value){
 	global $wpdb;
+	
+	$table_name = $wpdb->prefix . 'rl_framework';
 
 	if(is_array($value)){
 		$value = serialize($value);
 	}
 
 	$data  = rl_get_db_data($current_tab, $key);
-
+	
 	if($data){
 		$wpdb->update( 
 			$table_name, 
@@ -168,7 +159,7 @@ function rl_get_db_data($page, $key){
 	
 	$table_name = $wpdb->prefix . 'rl_framework';
 	
-	$results = $wpdb->get_results("SELECT meta_value FROM $table_name WHERE page = '".$page."' AND meta_key = '".$key."'");
+	$results = $wpdb->get_results("SELECT * FROM $table_name WHERE page = '".$page."' AND meta_key = '".$key."'");
 
 	$sl = $results[0]->meta_value;
 

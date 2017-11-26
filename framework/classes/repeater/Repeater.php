@@ -7,6 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 Class Repeater{
 
     private $current_tab;
+    public $label;
 
     function __construct(){
 
@@ -19,7 +20,6 @@ Class Repeater{
     }
 
     function make_repeater($repeater_options){
-        
         // Get name of repeater 
         $repeater_name = $repeater_options['name'];
         // Get current saved options if any;
@@ -36,7 +36,11 @@ Class Repeater{
     }
 
 
-    function text($options = ''){
+    function text($options = '', $label = ''){
+
+        if($label){
+            $options['label'] = $label;
+        }
         
         $html .= '<td>';
                 $html .= '<input data-label="' . $options['label'] . '" data-type="text" class="input repeater-input" name="' . strtolower(remove_spaces($options['name'])) .'"placeholder="'. $options['placeholder'] . '" value="' . $options['value'] . '"></input>';
@@ -46,7 +50,12 @@ Class Repeater{
 
     }
 
-    function colour_picker($options = ''){
+    function colour_picker($options = '', $label = ''){
+        
+        if($label){
+            $options['label'] = $label;
+        }
+
         $html .= '<td>';
         $html .= ' <input  data-label="' . $options['label'] . '" data-type="colour_picker" class="input repeater-input rl-colour-picker" id="rl-colour-picker" style="background-color: ' . $options['value'] . '" type="text" name="' . strtolower(remove_spaces($options['name'])) . '" value="' . $options['value'] . '"></input>';
         $html .= '</td>';

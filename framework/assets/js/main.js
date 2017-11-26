@@ -5,9 +5,13 @@ jQuery(document).ready(function ($) {
     tinymce.init({ 
         selector:'.tinymce-textarea',
         images_upload_base_path: '/some/basepath',
+        relative_urls: false,
+        convert_urls: false,   
+        remove_script_host : false,
         plugins: 'textcolor table code',
         toolbar1: 'forecolor backcolor table tabledelete alignjustify alignright aligncenter alignleft underline italic bold mybutton',
         toolbar2: "code fontselect fontsizeselect formatselect",
+        
         setup: function (editor) {
             editor.addButton('mybutton', {
               text: 'Upload Image',
@@ -23,8 +27,8 @@ jQuery(document).ready(function ($) {
                     var uploaded_image = image.state().get('selection').first();
                     // We convert uploaded_image to a JSON object to make accessing it easier
                     // Output to the console uploaded_image
-                    var image_url = uploaded_image.toJSON().url;
-                    
+                    var image_url = uploaded_image.changed.url;
+                    console.log(image_url);
                     // Let's assign the url value to the input field
                     editor.insertContent('<img alt="'+ uploaded_image.attributes.alt +'" title="'+ uploaded_image.attributes.title +'" src=' + image_url + '>');
                     
