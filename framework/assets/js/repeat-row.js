@@ -21,11 +21,10 @@ jQuery(document).ready(function ($) {
                 $(this).attr('name', newName); 
 
             });
-
-           
-
         trLast.after(trNew);
-
+        if(!trLast.find('td:last').hasClass('remove-row')){
+            trNew.append('<td class="remove-row">X</td>');
+        }
         reinit_colour_picker_remove();
 
    });

@@ -11,14 +11,14 @@
              </tr>
         <?php endif; ?>
 
-        <?php if($count1 === $count2 && $saved_options) : ?>
+        <?php $i = 0; if($count1 === $count2 && $saved_options) : ?>
                 <?php foreach($saved_options as $key => $row) : ?>
                     <tr>
                         <?php foreach($row as $key => $field): 
                             $run = $field['fields']['type'];
                             echo $this->$run($field['fields']);
                          endforeach; ?>
-                    <td class="remove-row">X</td>
+                    <?php if($i != 0 ) : ?> <td class="remove-row">X</td> <?php endif; $i++; ?>
                     </tr>
                 <?php endforeach; ?>
 
@@ -28,7 +28,7 @@
                     $run = $options['type'];
                     echo $this->$run($options);         
                 endforeach; ?>
-            <td class="remove-row">X</td>
+                <?php if($i != 0 ) : ?> <td class="remove-row">X</td> <?php endif;  $i++; ?>
             </tr>   
         <?php endif; ?>
     </tbody>

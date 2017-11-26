@@ -7,10 +7,11 @@ require_once 'plugin_delete.php';
 
 function process_boiler_plate_repeater_fields() {
 	$data = $_POST['data'];
-
+	
 	$current_tab  = $_POST['current_tab'];
 	$repeaterArray = [];
 	$repeaters = $data[0];
+
 	foreach($repeaters as $r_name => $value ){
 		foreach($value as $key => $val){
 			$repeaterArray[$r_name][] = $val; 
@@ -91,48 +92,39 @@ function remove_spaces($name){
 	
 }
 
-
 function rl_get_option($page, $key){
-	global $wpdb;
+	
+	$results = rl_get_db_data($page, $key);
 
-	$table_name = $wpdb->prefix . 'rl_framework';
-
-	$results = $wpdb->get_results("SELECT meta_value FROM $table_name WHERE page = '".$page."' AND meta_key = '".$key."'");
-
-	$uns = unserialize($results[0]->meta_value);
-
-
-	if($uns){
-		
-		$results = $uns;
-		
-	}else{
-
-		$results = $results[0]->meta_value;
-		
-	}
-
-	return $results;
-
-}
-
-
-function rl_have_rows($page, $key){
-	global $wpdb;
-	$table_name = $wpdb->prefix . 'rl_framework';
-	$results = $wpdb->get_results("SELECT meta_value FROM $table_name WHERE page = '".$page."' AND meta_key = '".$key."'");
-
-	if(is_array($results)){
-		return true;
+	if($results){
+		return $results;
 	}
 
 	return false;
 
-
 }
 
-function rl_the_row(){
-	echo 'row';
+function rl_get_rows($page, $key){
+	
+	$results = rl_get_db_data($page, $key);
+
+	$combine = [];
+
+	foreach($results as $key => $value){
+		
+		$combine[$key] = [];
+
+		foreach($value as $k => $v){
+			$combine[$key][$v['label']] = $v['fields']['value'];
+		}
+	}
+
+	if(is_array($combine)){
+		return $combine; 
+	}
+
+	return false;
+	
 }
 
 
@@ -142,11 +134,10 @@ function rl_update_db($current_tab, $key, $value){
 	if(is_array($value)){
 		$value = serialize($value);
 	}
-	$table_name = $wpdb->prefix . 'rl_framework';
 
-	$check = $wpdb->get_results("SELECT * FROM $table_name WHERE meta_key = '".$key."'");
+	$data  = rl_get_db_data($current_tab, $key);
 
-	if($check){
+	if($data){
 		$wpdb->update( 
 			$table_name, 
 			array( 
@@ -169,7 +160,30 @@ function rl_update_db($current_tab, $key, $value){
 		));
 	}
 
+}
 
+function rl_get_db_data($page, $key){
+
+	global $wpdb;
+	
+	$table_name = $wpdb->prefix . 'rl_framework';
+	
+	$results = $wpdb->get_results("SELECT meta_value FROM $table_name WHERE page = '".$page."' AND meta_key = '".$key."'");
+
+	$sl = $results[0]->meta_value;
+
+	$uns = unserialize($sl);
+	
+	if($uns){
+			
+		$data = $uns;
+			
+	}else{
+	
+		$data = $sl;
+			
+	}
+	return $data;
 
 }
 
