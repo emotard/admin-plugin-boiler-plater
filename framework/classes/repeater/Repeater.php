@@ -30,7 +30,7 @@ Class Repeater{
         $count2 = count($saved_options[0]);
         // Get Table id for sql search strip spaces and put to lowercase.
         $table_id =  strtolower(remove_spaces($repeater_options['id']));
-       
+
         require 'repeater-table.php';
 
     }

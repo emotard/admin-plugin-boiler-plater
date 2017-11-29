@@ -126,9 +126,9 @@ function rl_update_db($current_tab, $key, $value){
 		$value = serialize($value);
 	}
 
-	$data  = rl_get_db_data($current_tab, $key);
-	
-	if($data){
+	$check_key = rl_check_if_key_exists($table_name, $current_tab, $key);
+
+	if($check_key){
 		$wpdb->update( 
 			$table_name, 
 			array( 
@@ -159,9 +159,11 @@ function rl_get_db_data($page, $key){
 	
 	$table_name = $wpdb->prefix . 'rl_framework';
 	
-	$results = $wpdb->get_results("SELECT * FROM $table_name WHERE page = '".$page."' AND meta_key = '".$key."'");
+	$sql = $wpdb->prepare("SELECT * FROM $table_name WHERE page = %s AND meta_key = %s", $page, $key);
 
-	$sl = $results[0]->meta_value;
+	$results = $wpdb->get_results($sql, ARRAY_A);
+
+	$sl = $results[0]['meta_value'];
 
 	$uns = unserialize($sl);
 	
@@ -178,5 +180,19 @@ function rl_get_db_data($page, $key){
 
 }
 
+function rl_check_if_key_exists($table_name, $page, $key ) {
+	
+	global $wpdb;
+	
+	$sql = $wpdb->prepare("SELECT * FROM $table_name WHERE page = %s AND meta_key = %s", $page, $key);
 
+	$check_key = $wpdb->get_results($sql, ARRAY_A);
+
+	if($check_key){
+		return true;
+	}
+
+	return false;
+
+}
 
