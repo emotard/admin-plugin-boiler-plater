@@ -1,8 +1,5 @@
 <?php 
 
-
-$option = rl_get_option('general-settings', 'single-textarea');
-
 $repeater->make_repeater([
     'name' => 'Repeater Name',
     'id' => 'Repeater',

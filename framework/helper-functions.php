@@ -132,16 +132,18 @@ function rl_update_db($current_tab, $key, $value){
 		$wpdb->update( 
 			$table_name, 
 			array( 
-				'page' => $current_tab,
 				'meta_key' => $key,	
 				'meta_value' => $value
 			), 
-			array( 'meta_key' => $key ), 
 			array( 
-				'%s',	// value1
-				'%s'	// value2
+				'page' => $current_tab,
+				'meta_key' => $key
 			), 
-			array( '%s' ) 
+			array( 
+				'%s',
+				'%s'
+			), 
+			array( '%s', '%s' ) 
 		);
 	}else{
 		$wpdb->insert($table_name, array(
