@@ -1,7 +1,9 @@
 jQuery(document).ready(function ($) {
 
-   var baseUrl = location.hostname;
+    var baseUrl = location.hostname;
     
+    /* Init tinymce */
+
     tinymce.init({ 
         selector:'.tinymce-textarea',
         images_upload_base_path: '/some/basepath',
@@ -12,6 +14,8 @@ jQuery(document).ready(function ($) {
         toolbar1: 'forecolor backcolor table tabledelete alignjustify alignright aligncenter alignleft underline italic bold mybutton',
         toolbar2: "code fontselect fontsizeselect formatselect",
         
+         /* Add an upload button to tinymce so we can use the built in wordpress media libery to upload and insert the image to the textarea */
+
         setup: function (editor) {
             editor.addButton('mybutton', {
               text: 'Upload Image',
@@ -39,6 +43,7 @@ jQuery(document).ready(function ($) {
           }
     });
 
+    /* On submit run function save_input_text_fields */
 
     $('#submit-page').on('click', function(){
 
@@ -48,9 +53,17 @@ jQuery(document).ready(function ($) {
        
     });
 
+
+   
+
     function save_input_text_fields(){
-        var current_tab = getUrlVars()["current_tab"];
+
+         /* Get the current tab from the form */
+        var current_tab = $('form').attr('id');
+
         var data = [];
+
+        /* if there is a tab make this current else make it general-settings */ 
 
         if(current_tab){
             current_tab = current_tab;
@@ -58,6 +71,7 @@ jQuery(document).ready(function ($) {
             current_tab = 'general-settings';
         }
 
+        /* Push all inputs and selects from current tab into an array */ 
 
         $('#' + current_tab + ' .normal-input, #' + current_tab + ' .normal-select').each(
             function(index){  
@@ -71,12 +85,15 @@ jQuery(document).ready(function ($) {
             }
         );
 
+        /* Push all textares into the data array */ 
+
         $('.normal-textarea').each(
             function(index){
 
             var textarea = $(this);
             var id = textarea.attr('id');
 
+            /* if the textarea has a class of tinymce get the data using there helper function getContent */ 
             if(textarea.hasClass('tinymce-textarea')){
                 
                 data.push({
@@ -96,6 +113,8 @@ jQuery(document).ready(function ($) {
             
             }
         );
+
+        /* Send the data via ajax then run save_repeater_fields */ 
     
         $.ajax({
             url : myAjax.ajaxurl,
@@ -107,6 +126,7 @@ jQuery(document).ready(function ($) {
          })   
        
     }
+
 
     function save_repeater_fields(){
 
@@ -130,6 +150,9 @@ jQuery(document).ready(function ($) {
 
         var results = [];
         var obj = {}
+
+        /* Creating a mapped array which makes each name of the repater a key and pushers values into that array  */ 
+
         $.map(data, function(el, i){
             
             obj[el] = [];
@@ -156,6 +179,8 @@ jQuery(document).ready(function ($) {
 
         });
 
+        /* push object into single array to send via ajax */ 
+
         results.push(obj);
 
         $.ajax({
@@ -172,20 +197,7 @@ jQuery(document).ready(function ($) {
         
     }
 
-    function getUrlVars()
-    {
-        var vars = [], hash;
-        var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
-        for(var i = 0; i < hashes.length; i++)
-        {
-            hash = hashes[i].split('=');
-            vars.push(hash[0]);
-            vars[hash[0]] = hash[1];
-        }
-        return vars;
-    }
-
-  
+    /* Init colour picker on doc ready */ 
 
     $('.rl-colour-picker').each(function(index){
         

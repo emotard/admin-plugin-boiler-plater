@@ -1,4 +1,9 @@
 jQuery(document).ready(function ($) {
+
+  /* On add row button this finds the parents table id 
+   * Count the size of the current table 
+   * take the last tr and repeat it underneath clearing the data
+  */
    
    $('.add-row').on('click', function(index){
      
@@ -29,6 +34,7 @@ jQuery(document).ready(function ($) {
 
    });
 
+  /* Re init the colour picker for the added row */
 
    function reinit_colour_picker_remove(){
 
@@ -55,6 +61,9 @@ jQuery(document).ready(function ($) {
         });
           
     });
+
+
+    /* On remove click remove this row */
 
     $('.remove-row').each(function(index){
         

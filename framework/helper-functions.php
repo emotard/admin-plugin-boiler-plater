@@ -5,10 +5,14 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 require_once 'plugin_activation.php';
 require_once 'plugin_delete.php';
 
+/**
+ * Process the repeater fields for the given page.
+ */
 function process_boiler_plate_repeater_fields() {
+
 	$data = $_POST['data'];
-	
 	$current_tab  = $_POST['current_tab'];
+
 	$repeaterArray = [];
 	$repeaters = $data[0];
 
@@ -17,15 +21,10 @@ function process_boiler_plate_repeater_fields() {
 			$repeaterArray[$r_name][] = $val; 
 		}
 	}
-	$save = [];
-	foreach($repeaterArray as $key => $value){
-		$save[$key] = $value;
-	}
 
-	foreach($save as $key => $update){
-		rl_update_db($current_tab, $key, $update);
+	foreach($repeaterArray as $key => $value){
+		rl_update_db($current_tab, $key, $value);
 	}
-	
 	wp_die();
 }
 
@@ -64,7 +63,7 @@ add_action( 'wp_ajax_process_boiler_plate_page_fields',
 function plugin_create_slug( $route_name = '' ) {
 
 	if ( ! empty( $route_name ) ) {
-		$slug = strtolower( str_replace( " ", "-", $route_name ) );
+		$slug = strtolower(remove_spaces($route_name));
 
 		return $slug;
 	}
@@ -73,6 +72,12 @@ function plugin_create_slug( $route_name = '' ) {
 }
 
 
+
+/**
+ * Helper function to remove spaces and replace with
+ * @return string
+ */
+
 function remove_spaces($name){
 	
 	$replace = str_replace(' ', '-', $name);
@@ -80,6 +85,14 @@ function remove_spaces($name){
 	return $replace;
 	
 }
+
+
+/**
+ * Helper function to get a single option
+ *  @param string $page Current tab/page being passed
+ *  @param string $key  which meta_key to get from the database 
+ *  @return string|void
+ */
 
 function rl_get_option($page, $key){
 	
@@ -92,6 +105,14 @@ function rl_get_option($page, $key){
 	return false;
 
 }
+
+
+/**
+ * Helper function to get repeater fields 
+ *  @param string $page Current tab/page being passed
+ *  @param string $key  which meta_key to get from the database 
+ *  @return array|void
+ */
 
 function rl_get_rows($page, $key){
 	
@@ -116,6 +137,13 @@ function rl_get_rows($page, $key){
 	
 }
 
+
+/**
+ * Helper function to update the database
+ *  @param string $current_tab Current tab/page being passed
+ *  @param string $key  which meta_key to get from the database 
+ *  @param string $value to update in the db
+ */
 
 function rl_update_db($current_tab, $key, $value){
 	global $wpdb;
@@ -155,6 +183,14 @@ function rl_update_db($current_tab, $key, $value){
 
 }
 
+/**
+ * Helper function to get current fields from the db
+ *  @param string $page Current tab/page being passed
+ *  @param string $key  which meta_key to get from the database
+ *  @return array|string
+ * 
+ */
+
 function rl_get_db_data($page, $key){
 
 	global $wpdb;
@@ -165,22 +201,30 @@ function rl_get_db_data($page, $key){
 
 	$results = $wpdb->get_results($sql, ARRAY_A);
 
-	$sl = $results[0]['meta_value'];
+	$single = $results[0]['meta_value'];
 
-	$uns = unserialize($sl);
+	$or_array = unserialize($single);
 	
-	if($uns){
+	if($or_array){
 			
-		$data = $uns;
+		$data = $or_array;
 			
 	}else{
 	
-		$data = $sl;
+		$data = $single;
 			
 	}
 	return $data;
 
 }
+
+/**
+ * Helper function to check if the meta key is already in the database
+ *  @param string $table_name Name of the db_table
+ *  @param string $page Current tab/page being passed
+ *  @param string $key  which meta_key to get from the database 
+ *  @return string|void
+ */
 
 function rl_check_if_key_exists($table_name, $page, $key ) {
 	
