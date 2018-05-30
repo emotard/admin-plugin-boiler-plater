@@ -4,6 +4,8 @@ This plugin is just a normal boiler plate with some handy set up functions built
 
 Please feel free to comment and add any sugestions I know there is alot of work todo but this is a start.
 
+STARTER STEP once downloaded unzip and run composer install at it uses composer psr 4 autloader then zip and install 
+
 Step 1 - Change file plugin_name.php to what every file name you would like. 
 
 Step 2 - In this file define your PLUGIN_NAME 
@@ -28,6 +30,39 @@ $input->make_input_select('name', array(''), Create dropdown select, Params -- n
 $input->make_input_colour_picker('name'),  Create colour picker, Params -- name of input
 
 $input->make_input_tinymce('name'), Create textarea with tinymce, Params -- name of textarea
+
+$repeater->make_repeater([
+    'name' => 'Repeater Name',
+    'id' => 'Repeater',
+    'headers' => ['Text', 'Textarea', 'Select', 'ColorPicker],
+    'fields' => [
+        '0' => [
+            'type' => 'text',
+            'label' => 'country',
+            'name' => 'second-repeat',
+            'placeholder' => 'Enter Country'
+        ],
+        '1' => [
+            'type' => 'textarea',
+            'label' => 'address',
+            'name' => 'location-address',
+            'placeholder' => 'Enter Address'
+        ],
+        '2' => [
+            'type' => 'select',
+            'label' => 'post-code',
+            'name' => 'location-post-code',
+            'placeholder' => 'Enter Post Code'
+        ],
+        '3' => [
+            'type' => 'colour_picker',
+            'label' => 'custom-color-picker-2',
+            'name' => 'colour-picker-2',
+            'value' => '#000000'
+        ]
+    ],
+]);
+
 
 
 To be continued.......
